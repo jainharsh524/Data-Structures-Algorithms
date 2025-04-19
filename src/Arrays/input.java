@@ -11,6 +11,7 @@ public class input {
 
         int[] arr1 = new int[4];
         // input using for loops
+        //in array data structure length is an attribute of array class not a function.
         for (int i = 0; i < arr1.length; i++) {
             arr1[i] = sc.nextInt();
         }
