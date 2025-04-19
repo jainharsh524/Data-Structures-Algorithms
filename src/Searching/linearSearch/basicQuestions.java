@@ -1,4 +1,4 @@
-package linearSearch;
+package Searching.linearSearch;
 
 public class basicQuestions {
     //1. search in particular range.
