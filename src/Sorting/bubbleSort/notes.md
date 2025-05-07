@@ -54,3 +54,5 @@ Add a boolean flag (`swapped`) to stop if no swaps were made in a pass → **Bes
 ### 🚫 **When *Not* to Use**
 - Large datasets
 - Performance-sensitive applications
+---
+- Unstable sorting algorithm.
