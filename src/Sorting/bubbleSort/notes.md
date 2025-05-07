@@ -31,11 +31,11 @@ Add a boolean flag (`swapped`) to stop if no swaps were made in a pass → **Bes
 ---
 
 ### ⏱ **Time Complexity**
-| Case       | Comparisons      | Swaps           |
-|------------|------------------|------------------|
-| Best       | O(n)             | 0 (if optimized) |
-| Average    | O(n²)            | Depends          |
-| Worst      | O(n²)            | O(n²)            |
+| Case    | Comparisons | Swaps            |
+|---------|-------------|------------------|
+| Best    | O(n)        | 0 (if optimized) |
+| Average | O(n²)       | Depends          |
+| Worst   | O(n²)       | O(n²)            |
 
 ---
 
@@ -54,7 +54,3 @@ Add a boolean flag (`swapped`) to stop if no swaps were made in a pass → **Bes
 ### 🚫 **When *Not* to Use**
 - Large datasets
 - Performance-sensitive applications
-
----
-
-Would you like Java code for Bubble Sort as well?
