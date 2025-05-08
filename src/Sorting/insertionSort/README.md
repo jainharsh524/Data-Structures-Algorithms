@@ -44,10 +44,11 @@ Insertion Sort is a simple **comparison-based sorting algorithm** that builds th
 ---
 
 ### 📌 **When to Use**
-- Small datasets
+- Small datasets 
 - When data is **nearly sorted**
 - Teaching sorting basics
-
+- Stable sorting algorithm
+- Takes part in Hybrid sorting algorithm
 ---
 
 ### 🚫 **When *Not* to Use**
