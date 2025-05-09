@@ -1,5 +1,7 @@
 package Sorting.cyclicSort;
 
+import java.util.Arrays;
+
 public class cyclicSort {
     public static void swap(int[] arr, int index1, int index2){
         int temp = arr[index1];
@@ -16,6 +18,8 @@ public class cyclicSort {
         }
     }
     public static void main(String[] args) {
-
+        int[] arr = {2,3,1,4,5};
+        sort(arr);
+        System.out.println(Arrays.toString(arr));
     }
 }
