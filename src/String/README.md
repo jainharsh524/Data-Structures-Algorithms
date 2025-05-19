@@ -1,6 +1,3 @@
-Here is the updated `README.md` file with a new **StringBuffer** section added, along with a comparison between all three: `String`, `StringBuilder`, and `StringBuffer`.
-
----
 
 # Java: String, StringBuilder, and StringBuffer
 
