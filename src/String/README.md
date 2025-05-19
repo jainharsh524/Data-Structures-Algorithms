@@ -124,34 +124,6 @@ Java provides three primary classes to handle character sequences:
 
 ---
 
-## 🧪 Code Examples
-
-### String
-
-```java
-String str = "Java";
-str += " Rocks"; // New object created
-System.out.println(str); // Java Rocks
-```
-
-### StringBuilder
-
-```java
-StringBuilder sb = new StringBuilder("Java");
-sb.append(" Rocks");
-System.out.println(sb); // Java Rocks
-```
-
-### StringBuffer
-
-```java
-StringBuffer sbf = new StringBuffer("Java");
-sbf.append(" Rocks");
-System.out.println(sbf); // Java Rocks
-```
-
----
-
 ## 🧠 Tips
 
 * Use `String` for read-only or constant data.
