@@ -2,7 +2,6 @@ Here is the updated `README.md` file with a new **StringBuffer** section added, 
 
 ---
 
-````markdown
 # Java: String, StringBuilder, and StringBuffer
 
 ## 📘 Overview
@@ -73,7 +72,6 @@ Java provides three primary classes to handle character sequences:
   ```java
   char[] value;
   int count;
-````
 
 * Initial capacity: 16 chars. Auto-expands as needed: `newCapacity = (old * 2) + 2`.
 
