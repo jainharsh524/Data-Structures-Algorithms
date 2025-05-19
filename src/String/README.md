@@ -104,12 +104,6 @@ Java provides three primary classes to handle character sequences:
 * Also backed by a `char[]`.
 * All methods are **synchronized**, providing **thread safety**:
 
-  ```java
-  synchronized (this) {
-      // Thread-safe operations
-  }
-  ```
-
 ---
 
 ## 🆚 Comparison Table
