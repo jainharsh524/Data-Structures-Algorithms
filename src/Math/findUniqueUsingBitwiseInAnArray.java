@@ -18,8 +18,8 @@ public class findUniqueUsingBitwiseInAnArray {
                 sum += (num >> i) & 1;
             }
             sum %= 3;
-            System.out.println(sum);
-            result |= (sum << i);
+//            System.out.println(sum);
+            result += (sum << i);
 //            System.out.println(result);
         }
         return result;
