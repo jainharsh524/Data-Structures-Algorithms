@@ -1,4 +1,4 @@
-package Math;
+package Bitwise;
 
 public class findUniqueUsingBitwiseInAnArray {
     //If every element is occurring twice

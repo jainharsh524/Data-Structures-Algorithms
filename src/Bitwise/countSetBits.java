@@ -1,4 +1,4 @@
-package Math;
+package Bitwise;
 
 public class countSetBits {
     public static int countBits(int num){

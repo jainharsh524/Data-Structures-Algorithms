@@ -1,4 +1,4 @@
-package Math;
+package Bitwise;
 
 public class findNumbersOfDigitsInAnyBase {
     public static int noOfDigits(int n, int base){

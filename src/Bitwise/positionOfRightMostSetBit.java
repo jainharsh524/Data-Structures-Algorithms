@@ -1,4 +1,4 @@
-package Math;
+package Bitwise;
 
 public class positionOfRightMostSetBit {
     public static int positionOfRightMostSetBit(int n) {

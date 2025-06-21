@@ -1,4 +1,4 @@
-package Math;
+package Bitwise;
 
 public class XORFromZeroToNum {
     public static int XOR(int num){

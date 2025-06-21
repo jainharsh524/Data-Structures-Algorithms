@@ -1,4 +1,4 @@
-package Math;
+package Bitwise;
 
 public class powerOfTwo {
     public static boolean isPowerOfTwo(int n) {

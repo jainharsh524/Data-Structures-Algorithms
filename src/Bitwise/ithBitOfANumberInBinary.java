@@ -1,4 +1,4 @@
-package Math;
+package Bitwise;
 
 public class ithBitOfANumberInBinary {
     public static int findIThBit(int n, int i){

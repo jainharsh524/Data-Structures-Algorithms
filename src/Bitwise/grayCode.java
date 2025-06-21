@@ -1,4 +1,4 @@
-package Math;
+package Bitwise;
 import java.util.*;
 
 public class grayCode {
