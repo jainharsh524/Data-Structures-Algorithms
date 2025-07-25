@@ -44,42 +44,6 @@ This repository is dedicated to learning and practicing Data Structures and Algo
 
 ---
 
-## 📁 Folder Structure
-
-```plaintext
-📦 Data-Structures-And-Algorithms-Java/
- ┣ 📂 Arrays/
- ┣ 📂 LinkedLists/
- ┣ 📂 Trees/
- ┣ 📂 Graphs/
- ┣ 📂 Sorting/
- ┣ 📂 Searching/
- ┣ 📂 DynamicProgramming/
- ┣ 📂 StringAlgorithms/
- ┣ 📜 README.md
-```
----
-# 🤝 Contributing Guidelines
-
-Thank you for considering contributing to **Data Structures and Algorithms in Java**!  
-Your contributions help make this project better for everyone. Whether it's fixing bugs, adding new problems, or improving documentation — all contributions are welcome!
-
----
-
-## 📌 How to Contribute
-
-Follow these simple steps to start contributing:
-
-### 1️⃣ Fork the Repository
-Click on the **Fork** button at the top-right corner of this page to create a personal copy of this repository.
-
-### 2️⃣ Clone Your Forked Repository
-Clone the forked repo to your local machine:
-```bash
-git clone https://github.com/jainharsh524/Data-Structures-AlgorithmsJava.git
-```
-
-
   <h2>📬 Contact</h2>
   <p>Created by <strong>Harsh Jain</strong></p>
   <p><a href="https://github.com/jainharsh524">GitHub Profile</a></p>
