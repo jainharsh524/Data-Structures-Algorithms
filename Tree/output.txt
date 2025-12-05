@@ -1,0 +1,34 @@
+Inserted 50
+Inserted 30
+Inserted 70
+Inserted 20
+Inserted 40
+Inserted 60
+Inserted 80
+Inserted 35
+Inserted 75
+Inserted 90
+Inserted 10
+Found 40
+Not Found 99
+Preorder: 50 30 20 10 40 35 70 60 80 75 90 
+Inorder: 10 20 30 35 40 50 60 70 75 80 90 
+Postorder: 10 20 35 40 30 60 75 90 80 70 50 
+Levelorder: 50 30 70 20 40 60 80 10 35 75 90 
+Height: 3
+Top View: 10 20 30 50 70 80 90 
+Bottom View: 10 20 35 60 75 80 90 
+Right View: 50 70 80 90 
+Left View: 50 30 20 10 
+Deleted 70
+Preorder: 50 30 20 10 40 35 60 80 75 90 
+Inorder: 10 20 30 35 40 50 60 75 80 90 
+Postorder: 10 20 35 40 30 75 90 80 60 50 
+Levelorder: 50 30 60 20 40 80 10 35 75 90 
+Height: 3
+Top View: 10 20 30 50 60 80 90 
+Bottom View: 10 20 35 40 75 80 90 
+Right View: 50 60 80 90 
+Left View: 50 30 20 10 
+Deleted 50
+Preorder: 40 30 20 10 35 60 80 75 90 
