@@ -13,14 +13,15 @@ public:
             }
         }
 
-        ListNode* dummy = new ListNode(-1);
-        ListNode* tail = dummy;
+        ListNode dummy(0);
+        ListNode* curr = &dummy;
 
         while (!pq.empty()) {
             auto [val, idx] = pq.top();
             pq.pop();
-            tail->next = new ListNode(val);
-            tail = tail->next;
+
+            curr->next = new ListNode(val);
+            curr = curr->next;
 
             if (lists[idx] != NULL) {
                 pq.push({lists[idx]->val, idx});
@@ -28,7 +29,7 @@ public:
             }
         }
 
-        return dummy->next;
+        return dummy.next;
     }
 };
 
