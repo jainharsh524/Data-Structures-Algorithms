@@ -1,38 +1,32 @@
-#include <bits/stdc++.h>
-using namespace std;
-
 class Solution {
 public:
     bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
-        vector<vector<int>> graph(numCourses);
-        vector<int> indegree(numCourses, 0);
-
-        // Build graph & indegree count
-        for (auto &pre : prerequisites) {
-            int course = pre[0];
-            int prereq = pre[1];
-            graph[prereq].push_back(course);
-            indegree[course]++;
+        vector<int> indeg(numCourses, 0);
+        for(int i = 0;i<prerequisites.size();i++){
+            indeg[prerequisites[i][0]]++;
         }
-
         queue<int> q;
-        for (int i = 0; i < numCourses; i++) {
-            if (indegree[i] == 0) q.push(i);
+        for(int i = 0;i<numCourses;i++){
+            if(indeg[i]==0) q.push(i);
         }
-
-        int processed = 0;
-        while (!q.empty()) {
-            int curr = q.front();
+        vector<vector<int>> adj_lst(numCourses);
+        for(int i = 0;i<prerequisites.size();i++){
+            adj_lst[prerequisites[i][1]].push_back(prerequisites[i][0]);
+        }
+        cout<<endl;
+        vector<int> res;
+        while(!q.empty()){
+            int nd = q.front();
             q.pop();
-            processed++;
-
-            for (int neighbor : graph[curr]) {
-                indegree[neighbor]--;
-                if (indegree[neighbor] == 0) q.push(neighbor);
+            res.push_back(nd);
+            for(auto &nei: adj_lst[nd]){
+                indeg[nei]--;
+                if(indeg[nei]==0){
+                    q.push(nei);
+                }
             }
         }
-
-        return processed == numCourses;
+        if(res.size()<numCourses) return false;
+        else return true;
     }
 };
-
