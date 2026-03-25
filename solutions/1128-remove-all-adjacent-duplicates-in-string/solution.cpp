@@ -1,17 +1,19 @@
 class Solution {
 public:
     string removeDuplicates(string s) {
-        stack<char> st;
-        string res = "";
-        for(char ch: s){
-            if(st.empty()) st.push(ch);
-            else if(st.top()==ch) st.pop();
-            else st.push(ch);
+        int index = -1;
+        int i = 1;
+        while(i>0&&i<s.size()){
+            if(s[i-1]==s[i]){
+                s.erase(i-1, 2);
+                i = i-1;
+                cout<<i<<endl;
+            }
+            else i++;
+            if(i==0){
+                i = 1;
+            }
         }
-        while(!st.empty()){
-            res = st.top()+res;
-            st.pop();
-        }
-        return res;
+        return s;
     }
 };
