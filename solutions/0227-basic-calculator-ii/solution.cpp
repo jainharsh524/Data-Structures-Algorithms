@@ -1,53 +1,46 @@
 class Solution {
 public:
-    int priority(char op) {
-        if (op == '*' || op == '/') return 2;
-        if (op == '+' || op == '-') return 1;
-        return -1;
-    }
-
     int calculate(string s) {
-        stack<int> num;
-        stack<char> oper;
-        int res = 0;
+        stack<int> st;
+        int num = 0;
+        char op = '+';
 
-        for (int i = 0; i < s.size(); i++) {
-            if (s[i] >= '0' && s[i] <= '9') {
-                res = res * 10 + (s[i] - '0');
+        for(int i = 0; i < s.size(); i++) {
+            char c = s[i];
+
+            if(isdigit(c)) {
+                num = num * 10 + (c - '0');
             }
-            else if (s[i] == ' ') continue;
-            else {
-                num.push(res);
-                res = 0;
-                while (!oper.empty() && priority(s[i]) <= priority(oper.top())) {
-                    char op = oper.top(); oper.pop();
-                    int a = num.top(); num.pop();
-                    int b = num.top(); num.pop();
 
-                    int val;
-                    if (op == '+') val = b + a;
-                    else if (op == '-') val = b - a;
-                    else if (op == '*') val = b * a;
-                    else val = b / a;
+            // if operator or end of string
+            if((!isdigit(c) && c != ' ') || i == s.size() - 1) {
 
-                    num.push(val);
+                if(op == '+') {
+                    st.push(num);
                 }
-                oper.push(s[i]);
+                else if(op == '-') {
+                    st.push(-num);
+                }
+                else if(op == '*') {
+                    int top = st.top(); st.pop();
+                    st.push(top * num);
+                }
+                else if(op == '/') {
+                    int top = st.top(); st.pop();
+                    st.push(top / num);
+                }
+
+                op = c;
+                num = 0;
             }
         }
-        num.push(res);
-        while (!oper.empty()) {
-            char op = oper.top(); oper.pop();
-            int a = num.top(); num.pop();
-            int b = num.top(); num.pop();
-            int val;
-            if (op == '+') val = b + a;
-            else if (op == '-') val = b - a;
-            else if (op == '*') val = b * a;
-            else val = b / a;
-            num.push(val);
+
+        int res = 0;
+        while(!st.empty()) {
+            res += st.top();
+            st.pop();
         }
-        return num.top();
+
+        return res;
     }
 };
-
