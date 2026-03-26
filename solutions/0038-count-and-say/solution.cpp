@@ -1,37 +1,28 @@
 class Solution {
 public:
-    string Say(string s){
-        vector<pair<char, int>> mp;
-        int count = 0;
-        for(int i = 0;i<s.size();i++){
-            if(i<s.size()-1&&s[i]!=s[i+1]){
-                count++;
-                mp.push_back({s[i], count});
-                count = 0;
+    string countAndSay(int n) {
+        string res = "1";
+        string nres = "";
+        for(int i = 1;i<n;i++){
+            int count = 0;
+            char ele = res[0];
+            int sz = res.size();
+            for(int i = 0;i<sz;i++){
+                if(res[i]==ele){
+                    count++;
+                }
+                else{
+                    string ap = to_string(count)+res[i-1];
+                    nres.append(ap);
+                    count = 1;
+                    ele = res[i];
+                }
             }
-            else if(i==s.size()-1){
-                count++;
-                mp.push_back({s[i], count});
-            }
-            else{
-                count++;
-            }
-        }
-        for(int i = 0;i<mp.size();i++){
-            cout<<mp[i].first<<" "<<mp[i].second<<endl;
-        }
-        string res = "";
-        for(int i = 0;i<mp.size();i++){
-            res = res+to_string(mp[i].second);
-            res = res+mp[i].first;
+            string ap = to_string(count)+ele;
+            nres.append(ap);
+            res = nres;
+            nres = "";
         }
         return res;
-    }
-    string countAndSay(int n) {
-        string val = "1";
-        for(int i = 1;i<n;i++){
-            val = Say(val);
-        }
-        return val;
     }
 };
