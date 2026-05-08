@@ -1,26 +1,26 @@
 class Solution {
 public:
+    void swap(vector<int> &nums, int index1, int index2){
+        int temp = nums[index1];
+        nums[index1] = nums[index2];
+        nums[index2] = temp;
+    }
     void sortColors(vector<int>& nums) {
-        int low = 0, mid = 0, high = nums.size() - 1;
-
-        while (mid <= high) {
-            if (nums[mid] == 0) {
-                // Swap with low, move both forward
-                int temp = nums[low];
-                nums[low] = nums[mid];
-                nums[mid] = temp;
+        int low = 0;
+        int mid = 0;
+        int high = nums.size()-1;
+        while(mid<=high){
+            if(nums[mid]==0){
+                swap(nums, low, mid);
                 low++;
                 mid++;
-            } else if (nums[mid] == 1) {
-                // Move mid forward
-                mid++;
-            } else {
-                // nums[mid] == 2
-                // Swap with high, only move high backward
-                int temp = nums[mid];
-                nums[mid] = nums[high];
-                nums[high] = temp;
+            }
+            else if(nums[mid]==2){
+                swap(nums, mid, high);
                 high--;
+            }
+            else{
+                mid++;
             }
         }
     }
