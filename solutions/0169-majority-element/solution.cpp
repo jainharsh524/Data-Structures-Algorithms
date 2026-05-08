@@ -1,17 +1,16 @@
 class Solution {
 public:
     int majorityElement(vector<int>& nums) {
-        int sum = 0;
+        int count = 0;
         int ele = nums[0];
-        for(int i =0;i<nums.size();i++){
-            if(nums[i]==ele){
-                sum++;
+        for(int i = 0;i<nums.size();i++){
+            if(ele==nums[i]){
+                count++;
             }
-            else sum--;
-            if(sum == 0){
+            else count--;
+            if(count<0){
                 ele = nums[i];
-                cout<<ele;
-                sum = 1;
+                count = 1;
             }
         }
         return ele;
