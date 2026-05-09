@@ -1,27 +1,29 @@
 class Solution {
 public:
-    void rotate(vector<vector<int>>& matrix) {
-        int edgeLength = matrix.size();
-
-        int top = 0;
-        int bottom = edgeLength - 1;
-
-        while (top < bottom) {
-            for (int col = 0; col < edgeLength; col++) {
-                int temp = matrix[top][col];
-                matrix[top][col] = matrix[bottom][col];
-                matrix[bottom][col] = temp;
+    void swap(vector<vector<int>>& matrix, int r1, int r2, int c1, int c2){
+        int temp = matrix[r1][c1];
+        matrix[r1][c1] = matrix[r2][c2];
+        matrix[r2][c2] = temp;
+    }
+    void transpose(vector<vector<int>>& matrix){
+        for(int i = 0;i<matrix.size();i++){
+            for(int j = i+1;j<matrix[0].size();j++){
+                swap(matrix, i, j, j, i);
             }
-            top++;
-            bottom--;
         }
-
-        for (int row = 0; row < edgeLength; row++) {
-            for (int col = row + 1; col < edgeLength; col++) {
-                int temp = matrix[row][col];
-                matrix[row][col] = matrix[col][row];
-                matrix[col][row] = temp;
+    }
+    void revHo(vector<vector<int>>& matrix){
+        for(int i = 0;i<matrix.size();i++){
+            int j1 = 0;
+            int j2 = matrix.size()-1;
+            while(j1<j2){
+                swap(matrix, i, i, j1, j2);
+                j1++;j2--;
             }
-        }        
+        }
+    }
+    void rotate(vector<vector<int>>& matrix) {
+        transpose(matrix);
+        revHo(matrix);
     }
 };
