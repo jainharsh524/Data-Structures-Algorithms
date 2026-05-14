@@ -1,36 +1,44 @@
 class Solution {
 public:
-    vector<int> searchRange(vector<int>& nums, int target) {
-        vector<int> result = {-1, -1};
-        int left = binarySearch(nums, target, 0, nums.size() - 1, true);
-        if (left == -1) {
-            return result;
-        }
-        int right = binarySearch(nums, target, 0, nums.size() - 1, false);
-        result[0] = left;
-        result[1] = right;
-        return result;
-    }
-    
-    int binarySearch(vector<int>& nums, int target, int left, int right, bool findLeft) {
-        if (left > right) {
-            return -1;
-        }
-        
-        int mid = left + (right - left) / 2;
-        
-        if (nums[mid] == target) {
-            if (findLeft) {
-                int leftIndex = binarySearch(nums, target, left, mid - 1, findLeft);
-                return (leftIndex == -1) ? mid : leftIndex;
-            } else {
-                int rightIndex = binarySearch(nums, target, mid + 1, right, findLeft);
-                return (rightIndex == -1) ? mid : rightIndex;
+    vector<int> search(vector<int>& nums, int targetIndex){
+        int ptr1 = targetIndex;
+        int ptr2 = targetIndex;
+        while(ptr1>=0&&ptr2<nums.size()){
+            if(nums[ptr1]!=nums[targetIndex]&&nums[ptr2]!=nums[targetIndex]) break;
+            if(nums[ptr1]==nums[targetIndex]){
+                ptr1--;
             }
-        } else if (nums[mid] < target) {
-            return binarySearch(nums, target, mid + 1, right, findLeft);
-        } else {
-            return binarySearch(nums, target, left, mid - 1, findLeft);
+            if(nums[ptr2]==nums[targetIndex]){
+                ptr2++;
+            }
         }
+        while(ptr2<nums.size()){
+            if(nums[ptr2]!=nums[targetIndex]) break;
+            if(nums[ptr2]==nums[targetIndex]){
+                ptr2++;
+            }
+        }
+        while(ptr1>=0){
+            if(nums[ptr1]!=nums[targetIndex]) break;
+            if(nums[ptr1]==nums[targetIndex]){
+                ptr1--;
+            }
+        }
+        return {ptr1+1, ptr2-1};
+    }
+    vector<int> searchRange(vector<int>& nums, int target) {
+        int l = 0;
+        int h = nums.size()-1;
+        vector<int> res(2);
+        while(l<=h){
+            int m = l+(h-l)/2;
+            if(nums[m]==target){
+                cout<<m<<" ";
+                return search(nums, m);
+            }
+            else if(nums[m]<target) l = m+1;
+            else h = m-1;
+        }
+        return {-1, -1};
     }
 };
