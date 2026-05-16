@@ -1,39 +1,35 @@
 class Solution {
 public:
-    int getNumOfBouquets(vector<int>& bloomDay, int mid, int k) {
-        int numOfBouquets = 0;
+    int calBouquets(vector<int>& bloomDay, int k, int day){
+        int adj = 0;
         int count = 0;
-        for (int i = 0; i < bloomDay.size(); i++) {
-            if (bloomDay[i] <= mid) {
+        for(int i = 0;i<bloomDay.size();i++){
+            if(bloomDay[i]<=day){
+                adj++;
+            }
+            else adj = 0;
+            if(adj==k){
                 count++;
-            } else {
-                count = 0;
-            }
-
-            if (count == k) {
-                numOfBouquets++;
-                count = 0;
+                adj = 0;
             }
         }
-        return numOfBouquets;
+        return count;
     }
-
     int minDays(vector<int>& bloomDay, int m, int k) {
-        int start = 0;
-        int end = 0;
-        for (int day : bloomDay) {
-            end = max(end, day);
-        }
-        int minDays = -1;
-        while (start <= end) {
-            int mid = (start + end) / 2;
-            if (getNumOfBouquets(bloomDay, mid, k) >= m) {
-                minDays = mid;
-                end = mid - 1;
-            } else {
-                start = mid + 1;
+        // if((m*k)>bloomDay.size()) return -1;
+        int maxi = -1;
+        int l = *min_element(bloomDay.begin(), bloomDay.end());;
+        for(int ele: bloomDay) maxi = max(maxi, ele);
+        int mindays = -1;
+        while(l<=maxi){
+            int mid = l+(maxi-l)/2;
+            int bouquets = calBouquets(bloomDay, k, mid);
+            if(bouquets<m) l = mid+1;
+            else{
+                maxi = mid-1;
+                mindays = mid;
             }
         }
-        return minDays;
+        return mindays;
     }
 };
