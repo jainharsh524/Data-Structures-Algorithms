@@ -10,26 +10,19 @@
  */
 class Solution {
 public:
-    ListNode* recHelper(ListNode* head, ListNode*prev){
-        if(head==NULL) return prev;
-        else{
-            ListNode* nex = head->next;
-            head->next = prev;
-            prev = head;
-            return recHelper(nex, prev);
-        }
-    }
     ListNode* reverseList(ListNode* head) {
+        if(head==NULL) return NULL;
+        
+        ListNode* prev = NULL;
         ListNode* curr = head;
-        return recHelper(curr, NULL);
-        // ListNode* prev = NULL;
-        // ListNode* nex = NULL;
-        // while(curr!=NULL){
-        //     nex = curr->next;
-        //     curr->next = prev;
-        //     prev = curr;
-        //     curr = nex;
-        // }
-        // return prev;
+        ListNode* nex = head->next;
+        while(nex!=NULL){
+            curr->next = prev;
+            prev = curr;
+            curr = nex;
+            nex = curr->next;
+        }
+        curr->next = prev;
+        return curr;
     }
 };
