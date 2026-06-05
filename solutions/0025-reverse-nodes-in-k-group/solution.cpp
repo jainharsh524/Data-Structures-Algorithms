@@ -8,32 +8,47 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
+
 class Solution {
 public:
-    ListNode* reverseKGroup(ListNode* head, int k) {
-        ListNode* currHead = head;
-        int size = 0;
-        while(currHead){
-            currHead = currHead->next;
-            size++;
+
+    // Reverse linked list from head till end(exclusive)
+    ListNode* reverseK(ListNode* head, ListNode* end) {
+
+        ListNode* prev = end;
+        ListNode* curr = head;
+
+        while (curr != end) {
+
+            ListNode* nex = curr->next;
+
+            curr->next = prev;
+
+            prev = curr;
+
+            curr = nex;
         }
-        currHead = head;
-        if(size<k){
-            return currHead;
-        }
-        int ptr = 0;
-        ListNode* prev = NULL;
-        ListNode* nex = NULL;
-        ListNode* cc = currHead;
-        while(currHead){
-            if(ptr==k) break;
-            nex = currHead->next;
-            currHead->next = prev;
-            prev = currHead;
-            currHead = nex;
-            ptr++;
-        }
-        cc->next = reverseKGroup(currHead, k);
+
+        // prev becomes new head
         return prev;
+    }
+
+    ListNode* reverseKGroup(ListNode* head, int k) {
+
+        if (!head || k == 1)
+            return head;
+
+        ListNode* curr = head;
+        int count = 0;
+        while (curr && count < k) {
+            curr = curr->next;
+            count++;
+        }
+        if (count == k) {
+            ListNode* newHead = reverseK(head, curr);
+            head->next = reverseKGroup(curr, k);
+            return newHead;
+        }
+        return head;
     }
 };
