@@ -1,35 +1,28 @@
 class Solution {
 public:
     int leastInterval(vector<char>& tasks, int n) {
-        map<char, int> mp;
-        for(char &ch: tasks){
-            mp[ch]++;
-        }
-        priority_queue<int> pq;
-        // int cnt = 0;
-        for(auto it = mp.begin(); it != mp.end(); ) {
-            pq.push(it->second);
-            it++;
-        }
-        int tm = 0;
-        while(!pq.empty()){
-            vector<int> rem;
-            int count = n+1;
-            while(count&&!pq.empty()){
-                int mf = pq.top();
+        unordered_map<char,int> mp;
+        for(char c : tasks) mp[c]++;
+        priority_queue<pair<int,char>> pq;
+        for(auto x : mp) pq.push({x.second, x.first});
+        queue<pair<pair<char,int>,int>> q;
+        int time = 0;
+        while(!pq.empty() || !q.empty()) {
+            time++;
+            while(!q.empty() && q.front().second <= time) {
+                auto cur = q.front();
+                q.pop();
+                pq.push({cur.first.second, cur.first.first});
+            }
+            if(!pq.empty()) {
+                auto cur = pq.top();
                 pq.pop();
-                if(mf>1){
-                    rem.push_back(mf-1);
-                }
-                tm++;
-                count--;
+                int freq = cur.first;
+                char val = cur.second;
+                if(freq > 1)
+                    q.push({{val, freq-1}, time+n+1});
             }
-            for(int i = 0;i<rem.size();i++){
-                pq.push(rem[i]);
-            }
-            if(pq.empty()) break;
-            tm = tm+count;
         }
-        return tm;
+        return time;
     }
 };
