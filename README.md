@@ -1,50 +1,75 @@
-# 📚 Data Structures & Algorithms in Java and C
+<div align="center">
 
-Welcome to the **Data Structures and Algorithms (DSA)** repository in **Java and C**!  
-This repository contains a well-organized collection of Java implementations for classic and advanced data structures and algorithms. Perfect for interview prep, coding practice, and mastering Java and C fundamentals. Initially I was going to do  the whole DSA in java but due to some circumstances I had to learn C so from Now on DSA will be continued in C.
+# Data Structures & Algorithms
 
----
+**A curated collection of DSA implementations in Java and C**
 
-## 📖 Table of Contents
+[![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://openjdk.org/)
+[![C](https://img.shields.io/badge/C-00599C?style=for-the-badge&logo=c&logoColor=white)](https://en.wikipedia.org/wiki/C_(programming_language))
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
+[![Maintained](https://img.shields.io/badge/Maintained-Yes-brightgreen?style=for-the-badge)](https://github.com/jainharsh524)
 
-- [Introduction](#introduction)
-- [Topics Covered](#topics-covered)
-- [Folder Structure](#folder-structure)
-- [How to Use](#how-to-use)
-- [Contributing](#contributing)
+*Structured implementations for interview preparation, competitive programming, and core CS fundamentals.*
 
----
-
-## 📌 Introduction
-
-This repository is dedicated to learning and practicing Data Structures and Algorithms using **Java and C**. It covers a variety of problems ranging from basic to advanced, helping you strengthen your problem-solving skills and Java coding techniques.
+</div>
 
 ---
 
-## 📂 Topics Covered
+## Overview
 
-### ✅ Data Structures:
-- Arrays
-- Linked Lists
-- Stacks
-- Queues
-- Hash Maps
-- Trees (Binary Tree, Binary Search Tree, AVL Tree, Heap)
-- Graphs
+This repository documents my journey through **Data Structures and Algorithms** with implementations in **Java** and **C**.
 
-### ✅ Algorithms:
-- Sorting (Bubble Sort, Selection Sort, Insertion Sort, Merge Sort, Quick Sort, Heap Sort)
-- Searching (Linear Search, Binary Search)
-- Recursion & Backtracking
-- Dynamic Programming
-- Greedy Algorithms
-- Divide and Conquer
-- Graph Algorithms (DFS, BFS, Dijkstra, Floyd-Warshall)
-- String Algorithms
+The project began in **Java**. Due to academic requirements, I expanded into **C** — all new additions from this point forward are written in **C**, while existing Java solutions remain available for reference.
+
+Whether you are preparing for technical interviews, strengthening fundamentals, or comparing implementations across languages, this repo is organized to make navigation straightforward.
 
 ---
 
-  <h2>📬 Contact</h2>
-  <p>Created by <strong>Harsh Jain</strong></p>
-  <p><a href="https://github.com/jainharsh524">GitHub Profile</a></p>
+## Topics Covered
 
+### Data Structures
+
+| Category | Topics |
+|----------|--------|
+| **Linear** | Arrays, Linked Lists, Stacks, Queues |
+| **Hashing** | Hash Maps |
+| **Trees** | Binary Tree, BST, AVL Tree, Heap |
+| **Graphs** | Adjacency representations, traversal-ready structures |
+
+### Algorithms
+
+| Category | Topics |
+|----------|--------|
+| **Sorting** | Bubble, Selection, Insertion, Merge, Quick, Heap Sort |
+| **Searching** | Linear Search, Binary Search |
+| **Techniques** | Recursion, Backtracking, Divide & Conquer |
+| **Optimization** | Dynamic Programming, Greedy Algorithms |
+| **Graph** | DFS, BFS, Dijkstra, Floyd-Warshall |
+| **Strings** | Pattern matching and string manipulation |
+
+
+
+Please follow existing naming conventions and include brief comments explaining non-obvious logic.
+
+---
+
+## Author
+
+**Harsh Jain**
+
+- GitHub: [@jainharsh524](https://github.com/jainharsh524)
+- Email: [harshnareshjain1729@gmail.com](mailto:harshnareshjain1729@gmail.com)
+
+---
+
+## License
+
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
+
+---
+
+<div align="center">
+
+**If this repository helped you, consider giving it a star.**
+
+</div>
