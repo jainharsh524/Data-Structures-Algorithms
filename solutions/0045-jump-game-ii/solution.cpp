@@ -1,25 +1,18 @@
 class Solution {
 public:
     int jump(vector<int>& nums) {
-        int sz = nums.size();
-        vector<int> dp(sz, INT_MAX);
-        dp[sz-1]=0;
-        int goal = sz-1;
-        for(int i = sz-2;i>=0;i--){
-            if((i+nums[i])>=sz-1){
-                dp[i] = 1;
-                goal = min(goal, i);
-                // cout<<i<<endl;
+        int l = 0;
+        int r = 0;
+        int jumps = 0;
+        while(r<nums.size()-1){
+            int maxgoal = l;
+            for(int i = l;i<=r;i++){
+                maxgoal = max(maxgoal, nums[i]+i);
             }
-            else{
-                int mini = INT_MAX;
-                for(int j = nums[i];j>0;j--){
-                    mini = min(mini, dp[i+j]);
-                    // cout<<mini<<endl;
-                }
-                if(mini!=INT_MAX) dp[i] = 1+mini;
-            }
+            l = r+1;
+            jumps++;
+            r = maxgoal;
         }
-        return dp[0];
+        return jumps;
     }
 };
