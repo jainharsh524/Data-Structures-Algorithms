@@ -1,24 +1,26 @@
 class Solution {
 public:
-    
-    void dfs(vector<vector<int>>& image, int i, int j,int val, int newColor)
-    {
-        if(i<0 || i>=image.size() || j<0 || j>= image[0].size() || image[i][j] == newColor || image[i][j] != val)
-        {
-            return;
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+        int clr = image[sr][sc];
+        if(clr == color) return image;
+        queue<pair<int, int>> q;
+        q.push({sr, sc});
+        image[sr][sc] = color;
+        while(!q.empty()){
+            int r = q.front().first;
+            int c = q.front().second;
+            q.pop();
+            vector<int> drow = {0, -1, 0, 1};
+            vector<int> dcol = {1, 0, -1, 0};
+            for(int i = 0;i<4;i++){
+                int nr = r+drow[i];
+                int nc = c+dcol[i];
+                if(nr>=0&&nc>=0&&nr<image.size()&&nc<image[0].size()&&image[nr][nc]==clr){
+                    image[nr][nc] = color;
+                    q.push({nr, nc});
+                }
+            }
         }
-        image[i][j] = newColor;
-        dfs(image,i-1,j,val,newColor);
-        dfs(image,i+1,j,val,newColor);
-        dfs(image,i,j-1,val,newColor);
-        dfs(image,i,j+1,val,newColor);
-    }
-    
-    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int newColor)
-    {
-        int val = image[sr][sc];
-        dfs(image,sr,sc,val,newColor);
         return image;
     }
 };
-
