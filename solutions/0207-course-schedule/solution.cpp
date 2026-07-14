@@ -13,7 +13,6 @@ public:
         for(int i = 0;i<prerequisites.size();i++){
             adj_lst[prerequisites[i][1]].push_back(prerequisites[i][0]);
         }
-        cout<<endl;
         vector<int> res;
         while(!q.empty()){
             int nd = q.front();
