@@ -1,43 +1,23 @@
 class Solution {
 public:
     vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
-        vector<vector<int>> adj(numCourses);
         vector<int> indeg(numCourses, 0);
-
-        // Build graph and indegree array
-        for (auto &p : prerequisites) {
-            int course = p[0];
-            int pre    = p[1];
-            adj[pre].push_back(course);
-            indeg[course]++;
-        }
-
+        for(int i = 0; i < prerequisites.size(); i++) indeg[prerequisites[i][0]]++;
+        vector<vector<int>> adj_lst(numCourses);
+        for(int i = 0; i < prerequisites.size(); i++) adj_lst[prerequisites[i][1]].push_back(prerequisites[i][0]);
         queue<int> q;
-        // Push all nodes with indegree 0
-        for (int i = 0; i < numCourses; i++) {
-            if (indeg[i] == 0) {
-                q.push(i);
-            }
-        }
-
-        vector<int> topo;
-        while (!q.empty()) {
+        for(int i = 0; i < numCourses; i++) if(indeg[i] == 0) q.push(i);
+        vector<int> res;
+        while(!q.empty()){
             int node = q.front();
             q.pop();
-            topo.push_back(node);
-
-            for (int nxt : adj[node]) {
-                indeg[nxt]--;
-                if (indeg[nxt] == 0) {
-                    q.push(nxt);
-                }
+            res.push_back(node);
+            for(int nei : adj_lst[node]){
+                indeg[nei]--;
+                if(indeg[nei] == 0) q.push(nei);
             }
         }
-
-        // If we did not process all courses, there is a cycle
-        if ((int)topo.size() != numCourses) {
-            return {};
-        }
-        return topo;
+        if(res.size() != numCourses) return {};
+        return res;
     }
 };
