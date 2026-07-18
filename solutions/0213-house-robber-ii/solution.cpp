@@ -1,30 +1,16 @@
 class Solution {
 public:
-    int val(vector<int>& nums, vector<vector<int>>& dp, int curr, bool flag){
-        if(curr >= nums.size()) return 0;
-
-        // if first house was taken, skip last
-        if(flag && curr == nums.size() - 1) return 0;
-
-        if(dp[curr][flag] != -1) return dp[curr][flag];
-
-        int take, skip;
-
-        if(curr == 0){
-            take = nums[curr] + val(nums, dp, curr + 2, true);
-            skip = val(nums, dp, curr + 1, false);
-        }
-        else{
-            take = nums[curr] + val(nums, dp, curr + 2, flag);
-            skip = val(nums, dp, curr + 1, flag);
-        }
-
-        return dp[curr][flag] = max(take, skip);
+    int val(vector<int>& nums, vector<int>& dp, int curr, int last){
+        if(curr >= last) return 0;
+        if(dp[curr] != -1) return dp[curr];
+        int take = nums[curr] + val(nums, dp, curr + 2, last);
+        int skip = val(nums, dp, curr + 1, last);
+        return dp[curr] = max(take, skip);
     }
-
     int rob(vector<int>& nums) {
-        int n = nums.size();
-        vector<vector<int>> dp(n, vector<int>(2, -1));
-        return val(nums, dp, 0, false);
+        if(nums.size() == 1) return nums[0];
+        vector<int> dp1(nums.size(), -1);
+        vector<int> dp2(nums.size(), -1);
+        return max(val(nums, dp1, 0, nums.size() - 1), val(nums, dp2, 1, nums.size()));
     }
 };
