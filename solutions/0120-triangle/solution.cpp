@@ -10,7 +10,6 @@ public:
         }
     }
     int minimumTotal(vector<vector<int>>& triangle) {
-        // vector<vector<vector<int>>> dp(triangle.size(), vector<int>(triangle[triangle.size()-1].size(), vector<int>(40000, INT_MAX)));
         vector<vector<int>> dp(triangle.size(), vector<int>(triangle[triangle.size()-1].size(), INT_MAX));
         return solve(triangle, 0, 0, dp);
     }
