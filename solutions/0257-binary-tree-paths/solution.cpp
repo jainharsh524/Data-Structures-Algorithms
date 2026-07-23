@@ -20,12 +20,8 @@ public:
         }
         else{
             res = res+to_string(root->val)+"->";
-            if(root->left){
-                newPaths(root->left, res, ans);
-            }
-            if(root->right){
-                newPaths(root->right, res, ans);
-            }
+            if(root->left) newPaths(root->left, res, ans);
+            if(root->right) newPaths(root->right, res, ans);
         }
     }
     vector<string> binaryTreePaths(TreeNode* root) {
