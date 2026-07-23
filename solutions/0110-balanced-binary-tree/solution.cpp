@@ -13,19 +13,12 @@ class Solution {
 public:
     int height(TreeNode* root){
         if(root==NULL) return 0;
-        int left = 1+height(root->left);
-        int right = 1+height(root->right);
-        return max(left, right);
+        return 1 + max(height(root->right), height(root->left));
     }
     bool isBalanced(TreeNode* root) {
         if(root==NULL) return true;
-        else{
-            int left = height(root->left);
-            int right = height(root->right);
-            if(left-1==right||right-1==left||right==left){
-                return isBalanced(root->left)&&isBalanced(root->right);
-            }
-            else return false;
-        }
+        int right = height(root->right);
+        int left = height(root->left);
+        return abs(right-left)<=1 && isBalanced(root->left) && isBalanced(root->right);
     }
 };
