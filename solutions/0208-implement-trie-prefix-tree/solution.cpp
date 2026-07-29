@@ -1,15 +1,13 @@
-struct trieNode{
-    trieNode* alpha[26];
-    bool isEnd;
-    trieNode(){
-        isEnd = false;
-        for(int i = 0;i<26;i++){
-            alpha[i] = NULL;
-        }
-    }
-};
 class Trie {
 public:
+    struct trieNode{
+        trieNode* alpha[26];
+        bool isEnd;
+        trieNode(){
+            for(int i = 0;i<26;i++) alpha[i] = NULL;
+            isEnd=false;
+        }
+    };
     trieNode* root;
     Trie() {
         root = new trieNode();
@@ -17,31 +15,29 @@ public:
     
     void insert(string word) {
         trieNode* curr = root;
-        for(int i = 0;i<word.size();i++){
-            if(curr->alpha[word[i]-'a']==NULL) curr-> alpha[word[i]-'a'] = new trieNode();
-            curr = curr->alpha[word[i]-'a'];
+        for(char ch: word){
+            if(!curr->alpha[ch-'a']){
+                curr->alpha[ch-'a'] = new trieNode();
+            }
+            curr = curr->alpha[ch-'a'];
         }
         curr->isEnd = true;
     }
     
     bool search(string word) {
         trieNode* curr = root;
-        for(int i = 0;i<word.size();i++){
-            if(curr->alpha[word[i]-'a']==NULL) return false;
-            else{
-                curr = curr->alpha[word[i]-'a'];
-            }
+        for(char ch: word){
+            if(!curr->alpha[ch-'a']) return false;
+            curr = curr->alpha[ch-'a'];
         }
         return curr->isEnd;
     }
     
     bool startsWith(string prefix) {
         trieNode* curr = root;
-        for(int i = 0;i<prefix.size();i++){
-            if(curr->alpha[prefix[i]-'a']==NULL) return false;
-            else{
-                curr = curr->alpha[prefix[i]-'a'];
-            }
+        for(char ch: prefix){
+            if(!curr->alpha[ch-'a']) return false;
+            curr = curr->alpha[ch-'a'];
         }
         return true;
     }
