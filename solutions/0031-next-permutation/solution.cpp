@@ -1,32 +1,23 @@
 class Solution {
 public:
-    void swap(vector<int> &nums, int index1, int index2){
-        int temp = nums[index1];
-        nums[index1] = nums[index2];
-        nums[index2] = temp;
-    }
-    void rev(vector<int> &nums, int start, int end){
-        while(start < end){
-            swap(nums, start, end);
-            start++;
-            end--;
-        }
-    }
+
     void nextPermutation(vector<int>& nums) {
-        int i = nums.size() - 1;
-        while(i > 0 && nums[i] <= nums[i - 1]){
-            i--;
-        }
-        if(i == 0){
-            rev(nums, 0, nums.size() - 1);
-        }
-        else{
-            int j = nums.size() - 1;
-            while(nums[j] <= nums[i - 1]){
-                j--;
+        int n = nums.size()-1;
+        int l = n-1;
+        while(l>=0){
+            if(nums[l+1]>nums[l]){
+                int end = n;
+                while(end>l){
+                    if(nums[end]>nums[l]) break;
+                    else end--;
+                }
+                swap(nums[l], nums[end]);
+                cout<<l<<" "<<end;
+                reverse(nums.begin()+l+1, nums.end());
+                break;
             }
-            swap(nums, i - 1, j);
-            rev(nums, i, nums.size() - 1);
+            l--;
         }
+        if(l==-1)reverse(nums.begin(), nums.end());
     }
 };
