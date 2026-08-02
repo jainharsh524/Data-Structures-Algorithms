@@ -3,32 +3,26 @@ public:
     vector<int> spiralOrder(vector<vector<int>>& matrix) {
         vector<int> res;
         int top = 0;
-        int left = 0;
-        int right = matrix[0].size()-1;
         int bottom = matrix.size()-1;
-        while(top<=bottom&&left<=right){
-            for(int i = left;i<=right;i++){
-                res.push_back(matrix[top][i]);
-            }
+        int right = matrix[0].size()-1;
+        int left = 0;
+        while((top<=bottom)&&(left<=right)){
+            //left to right
+            for(int j = left;j<=right;j++) res.push_back(matrix[top][j]);
             top++;
-            cout<<top<<" ";
-            for(int j = top;j<=bottom;j++){
-                res.push_back(matrix[j][right]);
-            }
+            //top to bottom
+            for(int i = top;i<=bottom;i++) res.push_back(matrix[i][right]);
             right--;
-            if (top <= bottom) {
-                for(int i = right;i>=left;i--){
-                    res.push_back(matrix[bottom][i]);
-                }
+            //right to left
+            if(top<=bottom){
+                for(int j = right;j>=left;j--) res.push_back(matrix[bottom][j]);
                 bottom--;
             }
-            if (left <= right) {
-                for(int j = bottom;j>=top;j--){
-                    res.push_back(matrix[j][left]);
-                }
+            //bottom to top
+            if(left<=right){
+                for(int i = bottom;i>=top;i--) res.push_back(matrix[i][left]);
                 left++;
             }
-            cout<<left<<" ";
         }
         return res;
     }
