@@ -1,21 +1,22 @@
 class Solution {
 public:
     vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        sort(intervals.begin(), intervals.end(), [](const vector<int>& a, const vector<int>& b) { return a[0] < b[0]; });
+        int start = intervals[0][0];
+        int end = intervals[0][1];
         vector<vector<int>> res;
-        sort(intervals.begin(), intervals.end(), [](const vector<int>& a, const vector<int>& b) {
-            return a[0] < b[0];
-        });
-        vector<int> prev = intervals[0];
-        for(int i = 0;i<intervals.size();i++){
-            if(prev[1]>=intervals[i][0]){
-                prev[1]= max(prev[1], intervals[i][1]);
+        for(int i = 1;i<intervals.size();i++){
+            if(end>=intervals[i][0]){
+                end = max(end, intervals[i][1]);
             }
             else{
-                res.push_back(prev);
-                prev = intervals[i];
+                // cout<<start<<" "<<end<<endl;
+                res.push_back({start, end});
+                start = intervals[i][0];
+                end = intervals[i][1];
             }
         }
-        res.push_back(prev);
+        res.push_back({start, end});
         return res;
     }
 };
