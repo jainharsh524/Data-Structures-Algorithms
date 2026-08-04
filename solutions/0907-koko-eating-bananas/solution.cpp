@@ -1,24 +1,24 @@
 class Solution {
 public:
-    int calHours(vector<int>& piles, int speed){
-        int hrs = 0;
-        for(int ele: piles){
-            hrs+=ele/speed;
-            if((ele%speed)>0) hrs++;
+    long long calTime(vector<int>& piles, long long cap){
+        long long cnt = 0;
+        for(long long ele: piles){
+            cnt += ele/cap;
+            if(ele%cap!=0) cnt++;
         }
-        return hrs;
+        return cnt;
     }
-    int minEatingSpeed(vector<int>& piles, int h) {
-        int maxi = -1;
-        for(int ele: piles) maxi = max(ele, maxi);
-        int l = 1;
-        if(h == piles.size()) return maxi;
-        while(l<maxi){
-            int m = l+(maxi-l)/2;
-            int hrs = calHours(piles, m);
-            if(hrs>h) l = m+1;
-            else maxi = m;
+    int minEatingSpeed(vector<int>& piles, long long h) {
+        long long l = 1;
+        long long maxi = piles[0];
+        for(long long ele: piles) maxi = max(maxi, ele);
+        long long r = maxi;
+        while(l<=r){
+            long long mid = l+(r-l)/2;
+            long long hrs = calTime(piles, mid);
+            if(hrs>h) l = mid+1;
+            else r = mid-1;
         }
-        return l;
+        return int(l);
     }
 };
