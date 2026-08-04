@@ -11,13 +11,14 @@
  */
 class Solution {
 public:
-    TreeNode* prevNode = NULL;
+    TreeNode* prev = NULL;
     void flatten(TreeNode* root) {
-        if (!root) return;
+        if(!root) return;
         flatten(root->right);
+        // prev = root->right;
         flatten(root->left);
-        root->right = prevNode; // and last processed node ko right me chipkaate jao
+        root->right = prev;
         root->left = NULL;
-        prevNode = root; //jis node ki bhi processing khtm hui h wahi prev hoga
+        prev = root;
     }
 };
