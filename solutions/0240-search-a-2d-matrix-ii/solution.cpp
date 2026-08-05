@@ -1,13 +1,15 @@
 class Solution {
 public:
     bool searchMatrix(vector<vector<int>>& matrix, int target) {
-        int m = matrix.size(), n = m ? matrix[0].size() : 0, r = 0, c = n - 1;
-        while (r < m && c >= 0) {
-            if (matrix[r][c] == target) {
-                return true;
-            }
-            matrix[r][c] > target ? c-- : r++;
+        int n = 0;
+        int m = matrix[0].size()-1;
+        int ele = matrix[n][m];
+        while(target!=ele&&m>=0&&n<matrix.size()){
+            ele = matrix[n][m];
+            // cout<<ele<<" "<<n<<" "<<m<<endl;
+            if(ele>target) m--;
+            else if(ele<target)n++;
         }
-        return false;
+        return ele==target;
     }
 };
