@@ -1,26 +1,30 @@
 class Solution {
 public:
-    int divsum(vector<int>& nums, int curr){
+    int calthre(vector<int>& nums, int divi){
         int sum = 0;
         for(int ele: nums){
-            sum = sum+(ele/curr);
-            if(ele%curr!=0) sum++;
+            sum = sum+(ele+divi-1)/divi;
         }
         return sum;
     }
     int smallestDivisor(vector<int>& nums, int threshold) {
-        int maxi = *max_element(nums.begin(), nums.end());
         int mini = 1;
-        int mindiv = -1;
-        while(mini<=maxi){
+        for(int ele: nums) mini = min(ele, mini);
+        int maxi = nums[0];
+        for(int ele: nums) maxi = max(ele, maxi);
+        int ans = maxi;
+        while(mini <= maxi){
             int mid = mini+(maxi-mini)/2;
-            int sum = divsum(nums, mid);
-            if(sum<=threshold){
-                maxi = mid-1;
-                mindiv = mid;
+            int thre = calthre(nums, mid);
+            // cout<<mid<<" "<<thre<<endl;
+            if(thre>threshold){
+                mini = mid+1;
             }
-            else mini = mid+1;
+            else{
+                ans = min(ans, mid);
+                maxi = mid-1;
+            }
         }
-        return mindiv;
+        return ans;
     }
 };
