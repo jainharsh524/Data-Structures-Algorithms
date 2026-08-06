@@ -1,34 +1,82 @@
 class Solution {
 public:
-    vector<vector<string>> res;
-    bool isSafe(vector<string>& board, int row, int col) {
-        for (int i = 0; i < row; i++) {
-            if (board[i][col] == 'Q') return false;
+    bool isSafe(vector<string>& res, int r, int c){
+        int i = r;int j =c;
+        while(i>=0&&j>=0){
+            if(res[i][j]!='Q'){
+                i--;j--;
+            }
+            else return false;
         }
-        for (int i = 1; i <= min(row, col); i++) {
-            if (board[row - i][col - i] == 'Q') return false;
+        i = r;j =c;
+        while(i<res.size()&&j<res.size()){
+            if(res[i][j]!='Q'){
+                i++;j++;
+            }
+            else return false;
         }
-        for (int i = 1; i <= min(row, (int)board.size() - 1 - col); i++) {
-            if (board[row - i][col + i] == 'Q') return false;
+        i = r;j =c;
+        while(i>=0&&j<res.size()){
+            if(res[i][j]!='Q'){
+                i--;j++;
+            }
+            else return false;
+        }
+        i = r;j =c;
+        while(i<res.size()&&j>=0){
+            if(res[i][j]!='Q'){
+                i++;j--;
+            }
+            else return false;
+        }
+        i = r;j = c;
+        while(i>=0){
+            if(res[i][j]!='Q'){
+                i--;
+            }
+            else return false;
+        }
+        i = r;j = c;
+        while(j>=0){
+            if(res[i][j]!='Q'){
+                j--;
+            }
+            else return false;
+        }
+        i = r;j = c;
+        while(i<res.size()){
+            if(res[i][j]!='Q'){
+                i++;
+            }
+            else return false;
+        }
+        i = r;j = c;
+        while(j<res.size()){
+            if(res[i][j]!='Q'){
+                j++;
+            }
+            else return false;
         }
         return true;
     }
-    void backtrack(vector<string>& board, int row) {
-        if (row == board.size()) {
-            res.push_back(board);
+    void solve(int r, int c, vector<vector<string>>& final, vector<string> res){
+        if(isSafe(res, r, c)) res[r][c] = 'Q';
+        else return;
+        if((r==res.size()-1)){
+            final.push_back(res);
             return;
         }
-        for (int col = 0; col < board.size(); col++) {
-            if (isSafe(board, row, col)) {
-                board[row][col] = 'Q';
-                backtrack(board, row + 1);
-                board[row][col] = '.';
-            }
+        for(int i = 0;i<res.size();i++){
+            solve(r+1, i,final, res);
         }
+        res[r][c] = '.';
     }
     vector<vector<string>> solveNQueens(int n) {
-        vector<string> board(n, string(n, '.'));
-        backtrack(board, 0);
+        vector<vector<string>>res;
+        for(int i = 0;i<n;i++){
+            vector<string> temp(n, string(n, '.'));
+            solve(0, i, res, temp);
+        }
         return res;
     }
 };
