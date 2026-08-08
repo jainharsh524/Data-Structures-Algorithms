@@ -11,23 +11,18 @@
 class Solution {
 public:
     ListNode* oddEvenList(ListNode* head) {
-        if(!head) return NULL;
+        if(head==NULL) return NULL;
         ListNode* evhead = head;
-        ListNode* evprev = NULL;
-        ListNode* odhead = head->next;
-        ListNode* odcurr = odhead;
-        while(odcurr&&evhead&&evhead->next){
-            evhead->next = evhead->next->next;
-            evprev = evhead;
-            evhead = evhead->next;
-            if(evhead){
-                odcurr->next = evhead->next;
-                odcurr = odcurr->next;
-                // if(odcurr) cout<<odcurr->val<<" ";
-            }
+        ListNode* oddhead = head->next;
+        ListNode* evcurr = evhead;
+        ListNode* oddcurr = oddhead;
+        while(evcurr && oddcurr && oddcurr->next){
+            evcurr->next = oddcurr->next;
+            evcurr = evcurr->next;
+            oddcurr->next = evcurr->next;
+            oddcurr = oddcurr->next;
         }
-        if(evhead) evhead->next = odhead;
-        else evprev->next = odhead;
-        return head;
+        evcurr->next = oddhead;
+        return evhead;
     }
 };
