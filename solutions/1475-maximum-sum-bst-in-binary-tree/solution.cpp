@@ -6,35 +6,37 @@
  *     TreeNode *right;
  *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left),
+ * right(right) {}
  * };
  */
 class Solution {
 public:
-    struct custom{
-        int mini;
-        int maxi;
-        int maxsize;
-        custom(int a, int b, int c){
-            this->mini = a;
-            this->maxi = b;
-            this->maxsize = c;
+    struct customcheck {
+        int maxi, mini, maxsum;
+        customcheck(int maxi, int mini, int maxsum) {
+            this->maxi = maxi;
+            this->mini = mini;
+            this->maxsum = maxsum;
         }
     };
-    int max_sum = INT_MIN;
-    custom maxsum(TreeNode* root){
-        if(root==NULL) return custom(INT_MAX, INT_MIN, 0);
-        custom LST = maxsum(root->left);
-        custom RST = maxsum(root->right);
-        //this would be our condition to validate the BST
-        if(LST.maxi<root->val && RST.mini>root->val){
-            max_sum = max(max_sum, LST.maxsize+RST.maxsize+root->val); // if question asks you about the max sized BST then just don't add the root->val, add 1 istead of it;
-            return custom(min(root->val, LST.mini), max(root->val, RST.maxi), LST.maxsize+RST.maxsize+root->val);
+    int max_sum = 0;
+    customcheck* maxsummation(TreeNode* root) {
+        if (root == nullptr)
+            return new customcheck(INT_MIN, INT_MAX, 0);
+        customcheck* ls = maxsummation(root->left);
+        customcheck* rs = maxsummation(root->right);
+        if (ls->maxi < root->val && root->val < rs->mini) {
+            max_sum = max(max_sum, ls->maxsum + rs->maxsum + root->val);
+            return new customcheck(max(root->val, rs->maxi),
+                                   min(root->val, ls->mini),
+                                   ls->maxsum + rs->maxsum + root->val);
+        } else {
+            return new customcheck(INT_MAX, INT_MIN, 0);
         }
-        return custom(INT_MIN, INT_MAX, 0);
     }
     int maxSumBST(TreeNode* root) {
-        custom node = maxsum(root);
-        return (max_sum<0)?0: max_sum;
+        maxsummation(root);
+        return max_sum;
     }
 };
