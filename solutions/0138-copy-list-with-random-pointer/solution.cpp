@@ -13,22 +13,34 @@ public:
     }
 };
 */
-
 class Solution {
 public:
     Node* copyRandomList(Node* head) {
-        unordered_map<Node*,Node*> mp;
-        Node* itr=head;
-        while(itr){
-            mp[itr]=new Node(itr->val);
-            itr=itr->next;
+        if(!head) return nullptr;
+        Node* curr=head;
+        // Create copy nodes
+        while(curr){
+            Node* copy=new Node(curr->val);
+            copy->next=curr->next;
+            curr->next=copy;
+            curr=copy->next;
         }
-        itr=head;
-        while(itr){
-            mp[itr]->next=mp[itr->next];
-            mp[itr]->random=mp[itr->random];
-            itr=itr->next;
+        // Set random pointers
+        curr=head;
+        while(curr){
+            if(curr->random) curr->next->random=curr->random->next;
+            curr=curr->next->next;
         }
-        return mp[head];
+        // Separate the two lists
+        curr=head;
+        Node* newHead=head->next;
+        while(curr){
+            Node* copy=curr->next;
+            curr->next=copy->next;
+            if(copy->next)
+                copy->next=copy->next->next;
+            curr=curr->next;
+        }
+        return newHead;
     }
 };
