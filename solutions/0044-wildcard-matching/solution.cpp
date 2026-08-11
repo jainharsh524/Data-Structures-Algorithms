@@ -1,32 +1,29 @@
 class Solution {
-private:
-    bool fn(int i, int j, int len, string &s, string &p, vector<vector<int>>&dp){
-        if(len==s.length() && i==s.length() && j==p.length()) return true;
-        if(j==p.length()) return false;
-        if(i==s.length()){
-            for(int k=j; k<p.length(); k++){
-                if(p[k]!='*') return false;
-            }
-            return true;
-        }
-
-        if(dp[i][j]!=-1) return dp[i][j];
-
-        if(p[j]=='*'){
-            return dp[i][j]=fn(i,j+1,len,s,p,dp) || fn(i+1,j,len+1,s,p,dp);
-        }
-
-        else if(i<s.length() && (s[i]==p[j] || p[j]=='?')){
-            return dp[i][j]=fn(i+1,j+1,len+1,s,p,dp);
-        }
-
-        return dp[i][j]=false;
-        
-        
-    }
 public:
+    bool match(string& s, string& p, int index1, int index2,
+               vector<vector<int>>& dp) {
+        if (index1 == s.size() && index2 == p.size())
+            return true;
+        if (index1 == s.size()) {
+            if (p[index2] == '*')
+                return match(s, p, index1, index2 + 1, dp);
+            else
+                return false;
+        }
+        if (dp[index1][index2] != -1)
+            return dp[index1][index2];
+        if (p[index2] == '?' || s[index1] == p[index2]) {
+            return dp[index1][index2] = match(s, p, index1 + 1, index2 + 1, dp);
+        } else if (p[index2] == '*') {
+            return dp[index1][index2] =
+                       match(s, p, index1 + 1, index2, dp) ||
+                       match(s, p, index1 + 1, index2 + 1, dp) ||
+                       match(s, p, index1, index2 + 1, dp);
+        } else
+            return dp[index1][index2] = false;
+    }
     bool isMatch(string s, string p) {
-        vector<vector<int>>dp(s.length()+2,vector<int>(p.length()+2,-1));
-        return fn(0,0,0,s,p,dp);
+        vector<vector<int>> dp(s.size()+1, vector<int>(p.size()+1, -1));
+        return match(s, p, 0, 0, dp);
     }
 };
