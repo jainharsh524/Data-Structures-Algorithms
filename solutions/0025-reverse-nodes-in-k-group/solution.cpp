@@ -8,36 +8,45 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
-
 class Solution {
 public:
-    // Reverse linked list from head till end(exclusive)
-    ListNode* reverseK(ListNode* head, ListNode* end) {
-        ListNode* prev = end;
+    ListNode* findk(ListNode* head, int k){
+        ListNode* fast = head;
+        while(fast && k){
+            fast = fast->next;
+            k--;
+        }
+        return fast;
+    }
+    int sze(ListNode* head){
+        ListNode* fast = head;
+        int k = 0;
+        while(fast){
+            fast = fast->next;
+            k++;
+        }
+        return k;
+    }
+    ListNode* reverse(ListNode* head, ListNode* tail){
+        ListNode* prev = nullptr;
         ListNode* curr = head;
-        while (curr != end) {
-            ListNode* nex = curr->next;
+        ListNode* nex = nullptr;
+        while(curr && curr!=tail){
+            nex = curr->next;
             curr->next = prev;
             prev = curr;
             curr = nex;
         }
-        // prev becomes new head
+        head->next = curr;
         return prev;
     }
     ListNode* reverseKGroup(ListNode* head, int k) {
-        if (!head || k == 1)
-            return head;
-        ListNode* curr = head;
-        int count = 0;
-        while (curr && count < k) {
-            curr = curr->next;
-            count++;
-        }
-        if (count == k) {
-            ListNode* newHead = reverseK(head, curr);
-            head->next = reverseKGroup(curr, k);
-            return newHead;
-        }
-        return head;
+        if(head == nullptr) return nullptr;
+        int size = sze(head);
+        if(size<k) return head;
+        ListNode* nodek = findk(head, k);
+        ListNode* reversed_prev = reverse(head, nodek);
+        head -> next = reverseKGroup(nodek, k);
+        return reversed_prev;
     }
 };
