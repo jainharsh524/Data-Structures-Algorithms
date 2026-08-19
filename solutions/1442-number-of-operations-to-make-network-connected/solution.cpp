@@ -1,46 +1,55 @@
-class DS{
-public:
-    vector<int> rank, parent;
-    DS(int n){
-        rank.resize(n,0);
-        parent.resize(n);
-        for(int i=0;i<n;i++) parent[i]=i;
-    }
-    int find_ult_par(int node){
-        if(node==parent[node]) return node;
-        return parent[node]=find_ult_par(parent[node]);
-    }
-    void unionByRank(int u,int v){
-        int pu=find_ult_par(u);
-        int pv=find_ult_par(v);
-        if(pu==pv) return;
-        if(rank[pu]>rank[pv]){
-            parent[pv]=pu;
-        }
-        else if(rank[pv]>rank[pu]){
-            parent[pu]=pv;
-        }
-        else{
-            parent[pv]=pu;
-            rank[pu]++;
-        }
-    }
-};
 class Solution {
 public:
+    struct DSU{
+        vector<int> parent, rank;
+        DSU(int n){
+            parent.resize(n);
+            rank.resize(n, 0);
+            int i = 0;
+            for(int &ele: parent){
+                ele = i;
+                i++;
+            }
+        }
+
+        int find_ult_par(int node){
+            if(parent[node] != node){
+                parent[node] = find_ult_par(parent[node]);
+            }
+            return parent[node];
+        }
+
+        void union_by_rank(int u, int v){
+            int ultu = find_ult_par(u);
+            int ultv = find_ult_par(v);
+
+            if(ultu == ultv) return;
+
+            if(rank[ultu] < rank[ultv]){
+                parent[ultu] = ultv;
+            }
+            else if(rank[ultu] > rank[ultv]){
+                parent[ultv] = ultu;
+            }
+            else{
+                parent[ultv] = ultu;
+                rank[ultu]++;
+            }
+        }
+    };
+
     int makeConnected(int n, vector<vector<int>>& connections) {
-        DS ds(n);
-        int cntextras = 0;
-        for(auto &edge : connections){
-            if(ds.find_ult_par(edge[0]) == ds.find_ult_par(edge[1])) cntextras++;
-            else ds.unionByRank(edge[0], edge[1]);
+        if(connections.size() < n - 1) return -1;
+        DSU DS(n);
+        int comp = n;
+        for(int i = 0; i < connections.size(); i++){
+            int u = connections[i][0];
+            int v = connections[i][1];
+            if(DS.find_ult_par(u) != DS.find_ult_par(v)){
+                DS.union_by_rank(u, v);
+                comp--;
+            }
         }
-        int cntc = 0;
-        for(int i=0;i<n;i++){
-            if(ds.find_ult_par(i)==i) cntc++;
-        }
-        int ans = cntc - 1;
-        if(ans > cntextras) return -1;
-        return ans;
+        return comp - 1;
     }
 };
