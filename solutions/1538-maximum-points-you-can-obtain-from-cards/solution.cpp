@@ -1,22 +1,22 @@
 class Solution {
 public:
     int maxScore(vector<int>& cardPoints, int k) {
-        int n = cardPoints.size();
-        int window = n - k;
-        int total = 0;
-        for(int x : cardPoints)
-            total += x;
-        if(window == 0)
-            return total;
+        int nsz = cardPoints.size() - k - 1;
+        int l = 0;
         int sum = 0;
-        for(int i = 0; i < window; i++)
-            sum += cardPoints[i];
-        int minWindow = sum;
-        for(int r = window; r < n; r++) {
-            sum += cardPoints[r];
-            sum -= cardPoints[r - window];
-            minWindow = min(minWindow, sum);
+        int minsum = INT_MAX;
+        for(int i = 0;i<cardPoints.size();i++){
+            sum = sum + cardPoints[i];
+            if( i == nsz) minsum = min(sum, minsum);
+            else if(i > nsz){
+                sum = sum - cardPoints[l];
+                l++;
+                minsum = min(sum, minsum);
+            }
         }
-        return total - minWindow;
+        sum = 0;
+        cout<<minsum;
+        for(int ele: cardPoints) sum += ele;
+        return sum - minsum;
     }
 };
