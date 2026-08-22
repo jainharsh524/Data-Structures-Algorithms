@@ -1,14 +1,13 @@
 class Solution {
 public:
     int numSubarraysWithSum(vector<int>& nums, int goal) {
-        unordered_map<int,int> mp;
-        mp[0] = 1;          // Empty prefix
-        int prefix = 0;
         int ans = 0;
-        for(int x : nums){
-            prefix += x;
-            if(mp.count(prefix - goal))
-                ans += mp[prefix - goal];
+        unordered_map<int, int> mp;
+        int prefix = 0;
+        mp[0] = 1;
+        for (int i = 0;i<nums.size();i++){
+            prefix = prefix+nums[i];
+            if(mp.count(prefix - goal)) ans += mp[prefix - goal];
             mp[prefix]++;
         }
         return ans;
