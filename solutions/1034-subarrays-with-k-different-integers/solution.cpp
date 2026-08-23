@@ -1,24 +1,26 @@
- class Solution {
+class Solution {
 public:
-
-    int atMost(vector<int>& nums, int k){
-        unordered_map<int,int> mp;
-        int l = 0;
-        int ans = 0;
-        for(int r = 0; r < nums.size(); r++){
-            mp[nums[r]]++;
-            while(mp.size() > k){
-                mp[nums[l]]--;
-                if(mp[nums[l]] == 0)
-                    mp.erase(nums[l]);
-
-                l++;
-            }
-            ans += (r - l + 1);
-        }
-        return ans;
+    int findMin(unordered_map<int, int> &mp){
+        int mini = INT_MAX;
+        for(auto &ele: mp) mini = min(ele.second, mini);
+        return mini;
     }
     int subarraysWithKDistinct(vector<int>& nums, int k) {
-        return atMost(nums, k) - atMost(nums, k - 1);
+        unordered_map<int, int> mp;
+        int l = 0;
+        int minIndex = 0;
+        int countsubs = 0;
+        for(int i = 0;i<nums.size();i++){
+            mp[nums[i]] = i;
+            while(mp.size() > k){
+                if(mp[nums[l]] == l) mp.erase(nums[l]);
+                l++;
+            }
+            if(mp.size() == k){
+                int minIndex = findMin(mp);
+                countsubs = countsubs + minIndex + 1 - l;
+            }
+        }
+        return countsubs;
     }
 };
