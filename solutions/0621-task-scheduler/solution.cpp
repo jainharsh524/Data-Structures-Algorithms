@@ -1,28 +1,25 @@
 class Solution {
 public:
     int leastInterval(vector<char>& tasks, int n) {
-        unordered_map<char,int> mp;
-        for(char c : tasks) mp[c]++;
-        priority_queue<pair<int,char>> pq;
-        for(auto x : mp) pq.push({x.second, x.first});
-        queue<pair<pair<char,int>,int>> q;
-        int time = 0;
-        while(!pq.empty() || !q.empty()) {
-            time++;
-            while(!q.empty() && q.front().second <= time) {
-                auto cur = q.front();
-                q.pop();
-                pq.push({cur.first.second, cur.first.first});
-            }
-            if(!pq.empty()) {
-                auto cur = pq.top();
+        unordered_map<char, int> mp;
+        for(char ch: tasks) mp[ch]++; 
+        priority_queue<int> pq;
+        for(auto ele: mp) pq.push(ele.second);
+        queue<pair<int, int>> q;
+        int timer = 0;
+        while(!q.empty() || !pq.empty()){
+            if(!pq.empty()) { 
+                int freq = pq.top(); freq--;
+                if(freq != 0) q.push({freq, timer+n+1});
                 pq.pop();
-                int freq = cur.first;
-                char val = cur.second;
-                if(freq > 1)
-                    q.push({{val, freq-1}, time+n+1});
+            }
+            timer++;
+            while(!q.empty() && timer >= q.front().second){
+                int newfreq = q.front().first;
+                q.pop();
+                pq.push(newfreq);
             }
         }
-        return time;
+        return timer;
     }
 };
