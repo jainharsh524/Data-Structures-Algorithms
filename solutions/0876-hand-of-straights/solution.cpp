@@ -1,9 +1,9 @@
 class Solution {
 public:
     bool isNStraightHand(vector<int>& hand, int groupSize) {
-        if(hand.size()%groupSize!=0) return false;
+        if(hand.size() % groupSize != 0) return false;
         unordered_map<int, int> mp;
-        for(int ele: hand) mp[ele]++;
+        for(int i = 0;i<hand.size();i++) mp[hand[i]]++; 
         priority_queue<int, vector<int>, greater<int>> pq;
         for(auto ele: mp) pq.push(ele.first);
         while(!pq.empty()){
