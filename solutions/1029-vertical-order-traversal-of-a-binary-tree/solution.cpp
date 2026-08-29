@@ -1,35 +1,63 @@
 class Solution {
 public:
-    vector<vector<int>> verticalTraversal(TreeNode* root) {
-        queue<pair<TreeNode*, pair<int,int>>> q;
-        // node, {row, col}
-        q.push({root, {0, 0}});
-        vector<vector<pair<int,int>>> res(2002);
-        int offset = 1001;
-        int mini = offset, maxi = offset;
+    struct Node{
+        TreeNode* nd;
+        Node* left;
+        Node* right;
+        int r;
+        int c;
+
+        Node(TreeNode* root,int row,int col){
+            nd=root;
+            r=row;
+            c=col;
+            left=nullptr;
+            right=nullptr;
+        }
+    };
+    vector<vector<int>> verticalTraversal(TreeNode* root){
+        if(root==nullptr) return {};
+        queue<Node*> q;
+        Node* rt=new Node(root,0,0);
+        q.push(rt);
+        int minwid=INT_MAX,maxwid=INT_MIN;
         while(!q.empty()){
-            TreeNode* curr = q.front().first;
-            int row = q.front().second.first;
-            int col = q.front().second.second;
+            Node* curr=q.front();
             q.pop();
-            res[offset + col].push_back({row, curr->val});
-            mini = min(mini, offset + col);
-            maxi = max(maxi, offset + col);
-            if(curr->left) q.push({curr->left, {row + 1, col - 1}});
-            if(curr->right) q.push({curr->right, {row + 1, col + 1}});
+            minwid=min(minwid,curr->c);
+            maxwid=max(maxwid,curr->c);
+            if(curr->nd->left){
+                curr->left=new Node(curr->nd->left,curr->r+1,curr->c-1);
+                q.push(curr->left);
+            }
+            if(curr->nd->right){
+                curr->right=new Node(curr->nd->right,curr->r+1,curr->c+1);
+                q.push(curr->right);
+            }
         }
-        vector<vector<int>> ans;
-        for(int i = mini; i <= maxi; i++){
-            sort(res[i].begin(), res[i].end(),
-                 [](pair<int,int> &a, pair<int,int> &b){
-                     if(a.first == b.first)
-                         return a.second < b.second;
-                     return a.first < b.first;
-                 });
-            vector<int> temp;
-            for(auto &x : res[i]) temp.push_back(x.second);
-            ans.push_back(temp);
+        vector<vector<int>> res(maxwid-minwid+1);
+
+        queue<Node*> nq;
+        nq.push(rt);
+
+        while(!nq.empty()){
+            int sz=nq.size();
+            vector<Node*> level;
+            while(sz--){
+                Node* curr=nq.front();
+                nq.pop();
+                level.push_back(curr);
+                if(curr->left) nq.push(curr->left);
+                if(curr->right) nq.push(curr->right);
+            }
+            sort(level.begin(),level.end(),[](Node* a,Node* b){
+                if(a->c!=b->c)
+                    return a->c<b->c;
+                return a->nd->val<b->nd->val;
+            });
+            for(Node* curr:level)
+                res[curr->c-minwid].push_back(curr->nd->val);
         }
-        return ans;
+        return res;
     }
 };
