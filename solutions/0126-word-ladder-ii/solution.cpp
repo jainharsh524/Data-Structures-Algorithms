@@ -1,65 +1,56 @@
 class Solution {
 public:
-    vector<vector<string>> findLadders(string beginWord, string endWord, vector<string>& wordList) {
-
-        unordered_set<string> dict(wordList.begin(), wordList.end());
-        if(!dict.count(endWord)) return {};
-
-        unordered_map<string, vector<string>> patternMap;
-
-        int L = beginWord.size();
-
-        for(string &word : wordList){
-            for(int i = 0; i < L; i++){
-                string pattern = word;
-                pattern[i] = '*';
-                patternMap[pattern].push_back(word);
-            }
+    bool isEdge(string& a,string& b){
+        int count=0;
+        for(int i=0;i<a.size();i++){
+            if(a[i]!=b[i]) count++;
+            if(count>1) return false;
         }
+        return count==1;
+    }
+    void dfs(string word,string beginWord,
+             unordered_map<string,vector<string>>& parent,
+             vector<string>& path,
+             vector<vector<string>>& res){
+        if(word==beginWord){
+            reverse(path.begin(),path.end());
+            res.push_back(path);
+            reverse(path.begin(),path.end());
+            return;
+        }
+        for(string p:parent[word]){
+            path.push_back(p);
+            dfs(p,beginWord,parent,path,res);
+            path.pop_back();
+        }
+    }
+    vector<vector<string>> findLadders(string beginWord,string endWord, vector<string>& wordList){
 
-        unordered_map<string, vector<string>> parents;
-        unordered_map<string, int> level;
+        unordered_set<string> words(wordList.begin(),wordList.end());
+        if(!words.count(endWord)) return {};
 
-        queue<string> q;
-        q.push(beginWord);
-        level[beginWord] = 0;
-
-        while(!q.empty()){
-            string curr = q.front(); q.pop();
-            int currLevel = level[curr];
-            for(int i = 0; i < L; i++){
-                string pattern = curr;
-                pattern[i] = '*';
-                for(string &next : patternMap[pattern]){
-                    if(!level.count(next)){
-                        level[next] = currLevel + 1;
-                        q.push(next);
-                        parents[next].push_back(curr);
-                    }
-                    else if(level[next] == currLevel + 1){
-                        parents[next].push_back(curr);
+        unordered_map<string,vector<string>> parent;
+        unordered_set<string> current;
+        current.insert(beginWord);
+        bool found=false;
+        while(!current.empty() && !found){
+            for(string word:current) words.erase(word);
+            unordered_set<string> next;
+            for(string word:current){
+                for(string& candidate:wordList){
+                    if(words.count(candidate) && isEdge(word,candidate)){
+                        next.insert(candidate);
+                        parent[candidate].push_back(word);
+                        if(candidate==endWord) found=true;
                     }
                 }
             }
+            current=move(next);
         }
+        if(!found) return {};
         vector<vector<string>> res;
-        vector<string> temp;
-        function<void(string)> dfs = [&](string word){
-            temp.push_back(word);
-            if(word == beginWord){
-                vector<string> path = temp;
-                reverse(path.begin(), path.end());
-                res.push_back(path);
-            }
-            else{
-                for(string &p : parents[word]){
-                    dfs(p);
-                }
-            }
-            temp.pop_back();
-        };
-        if(level.count(endWord))
-            dfs(endWord);
+        vector<string> path={endWord};
+        dfs(endWord,beginWord,parent,path,res);
         return res;
     }
 };
