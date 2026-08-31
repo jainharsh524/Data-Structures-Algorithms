@@ -1,40 +1,32 @@
 class Solution {
 public:
-    unordered_map<int, vector<string>> caldist(string bW, vector<string>& wordList){
-        unordered_map<int, vector<string>> dist;
-        for(string &ele: wordList){
-            int cnt = 0;
-            for(int i = 0;i<ele.size();i++){
-                if(ele[i]!=bW[i]) cnt++;
-            }
-            dist[cnt].push_back(ele);
+    bool isEdge(string a, string b){
+        int count = 0;
+        for(int i = 0;i < a.size();i++){
+            if(a[i] != b[i]) count++;
         }
-        return dist;
+        return count == 1;
     }
     int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
-        queue <pair<string, int>> q;
-        unordered_map<int, vector<string>> mp = caldist(beginWord, wordList);
-        unordered_map<string, int> visited;
-        for(int i = 0;i<mp[1].size();i++){
-            q.push({mp[1][i], 1});
-            visited[mp[1][i]] = 1;
-            // cout<<mp[1][i]<<endl;
+        if(find(wordList.begin(), wordList.end(), endWord) == wordList.end()) return 0;
+        queue<pair<int, int>> q;
+        vector<int> visited(wordList.size(), 0);
+        for(int i = 0;i < wordList.size();i++){
+            if(isEdge(beginWord, wordList[i])){
+                q.push({i, 2});
+                visited[i] = 1;
+            }
         }
-
         while(!q.empty()){
-            string ele = q.front().first;
+            int index = q.front().first;
             int dist = q.front().second;
+            string curr = wordList[index];
             q.pop();
-            cout<<ele<<" "<<dist<<endl;
-            if(ele==endWord) return dist+1;
-            else{
-                mp = caldist(ele, wordList);
-                for(int i = 0;i<mp[1].size();i++){
-                    if(visited.find(mp[1][i])==visited.end()) {
-                        q.push({mp[1][i], dist+1});
-                        visited[mp[1][i]] = 1;
-                    }
-                    // cout<<mp[1][i]<<endl;
+            if(curr == endWord) return dist;
+            for(int i = 0;i < wordList.size();i++){
+                if(isEdge(wordList[i], curr) && !visited[i]){
+                    q.push({i, dist + 1});
+                    visited[i] = 1;
                 }
             }
         }
