@@ -5,7 +5,7 @@ public:
         int m = heights[0].size();
         vector<vector<int>> dist(n, vector<int>(m, 1e9));
         priority_queue<vector<int>, vector<vector<int>>, greater<vector<int>>> pq;
-        pq.push({0,0,0});
+        pq.push({0,0,0}); //maxdiff, r, c
         dist[0][0] = 0;
         vector<int> dr = {-1, 0, 1, 0};
         vector<int> dc = {0, 1, 0, -1};
