@@ -6,6 +6,7 @@ public:
         for(auto &f : times){
             adj_lst[f[0]].push_back({f[1], f[2]});
         }
+        //dist, node
         priority_queue<
             pair<int,int>,
             vector<pair<int,int>>,
