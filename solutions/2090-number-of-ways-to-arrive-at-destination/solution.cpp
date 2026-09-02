@@ -1,34 +1,36 @@
-#define ll long long
-#define pll pair<ll, ll>
 class Solution {
 public:
-    int MOD = 1e9 + 7;
     int countPaths(int n, vector<vector<int>>& roads) {
-        vector<vector<pll>> graph(n);
-        for(auto& road: roads) {
-            ll u = road[0], v = road[1], time = road[2];
-            graph[u].push_back({v, time});
-            graph[v].push_back({u, time});
+        const int MOD = 1e9 + 7;
+        vector<vector<pair<int,int>>> adj(n);
+        for(auto& road : roads) {
+            int u = road[0];
+            int v = road[1];
+            int wt = road[2];
+            adj[u].push_back({v,wt});
+            adj[v].push_back({u,wt});
         }
-        return dijkstra(graph, n, 0);
-    }
-    int dijkstra(const vector<vector<pll>>& graph, int n, int src) {
-        vector<ll> dist(n, LONG_MAX);
-        vector<ll> ways(n);
-        ways[src] = 1;
-        dist[src] = 0;
-        priority_queue<pll, vector<pll>, greater<>> minHeap;
-        minHeap.push({0, 0}); // dist, src
-        while (!minHeap.empty()) {
-            auto[d, u] = minHeap.top(); minHeap.pop();
-            if (d > dist[u]) continue; // Skip if `d` is not updated to latest version!
-            for(auto [v, time] : graph[u]) {
-                if (dist[v] > d + time) {
-                    dist[v] = d + time;
-                    ways[v] = ways[u];
-                    minHeap.push({dist[v], v});
-                } else if (dist[v] == d + time) {
-                    ways[v] = (ways[v] + ways[u]) % MOD;
+        priority_queue<pair<long long,int>,
+        vector<pair<long long,int>>,
+        greater<pair<long long,int>>> pq;
+        vector<long long> dist(n,LLONG_MAX);
+        vector<long long> ways(n,0);
+        dist[0] = 0;
+        ways[0] = 1;
+        pq.push({0,0});
+        while(!pq.empty()) {
+            auto [currDist,node] = pq.top();
+            pq.pop();
+            if(currDist > dist[node]) continue;
+            for(auto [nextNode,weight] : adj[node]) {
+                long long newDist = currDist + weight;
+                if(newDist < dist[nextNode]) {
+                    dist[nextNode] = newDist;
+                    ways[nextNode] = ways[node];
+                    pq.push({newDist,nextNode});
+                }
+                else if(newDist == dist[nextNode]) {
+                    ways[nextNode] = (ways[nextNode] + ways[node]) % MOD;
                 }
             }
         }
