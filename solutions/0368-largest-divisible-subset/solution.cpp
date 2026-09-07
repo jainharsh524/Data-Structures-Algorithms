@@ -16,8 +16,7 @@ public:
             if(dp[i]>maxi){
                 maxi = dp[i];
                 start = i;
-            }
-            
+            }  
         }
         vector<int> temp;
         temp.push_back(nums[start]);
