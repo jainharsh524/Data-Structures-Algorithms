@@ -1,25 +1,32 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
 class Solution {
 public:
-    int preIdx = 0;
-    int searchIn(int left, int right, vector<int>& inorder, int target){
-        for(int i = left; i <= right; i++){
-            if(inorder[i] == target)
-                return i;
+    int preInd = 0;
+    int search(vector<int>& in, int target, int inStart, int inEnd){
+        for(int i = inStart; i <= inEnd;i++){
+            if(in[i] == target) return i;
         }
         return -1;
     }
-    TreeNode* build(int left, int right,
-                    vector<int>& preorder,
-                    vector<int>& inorder){
-        if(left > right)
-            return nullptr;
-        TreeNode* root = new TreeNode(preorder[preIdx++]);
-        int rootIndex = searchIn(left, right, inorder, root->val);
-        root->left = build(left, rootIndex - 1, preorder, inorder);
-        root->right = build(rootIndex + 1, right, preorder, inorder);
+    TreeNode* build(vector<int>& pre, vector<int>& in, int inStart, int inEnd){
+        if(preInd >= pre.size() || inStart > inEnd) return nullptr;
+        TreeNode* root = new TreeNode(pre[preInd++]);
+        int inInd = search(in, pre[preInd-1], inStart, inEnd);
+        root->left = build(pre, in , inStart, inInd - 1);
+        root->right = build(pre, in, inInd+1, inEnd);
         return root;
     }
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
-        return build(0, inorder.size() - 1, preorder, inorder);
+        return build(preorder, inorder, 0, inorder.size()-1);
     }
 };
