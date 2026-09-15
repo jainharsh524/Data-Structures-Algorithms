@@ -1,36 +1,36 @@
 class Solution {
 public:
+int MOD = 1e9+7;
     int countPaths(int n, vector<vector<int>>& roads) {
-        const int MOD = 1e9 + 7;
-        vector<vector<pair<int,int>>> adj(n);
-        for(auto& road : roads) {
-            int u = road[0];
-            int v = road[1];
-            int wt = road[2];
-            adj[u].push_back({v,wt});
-            adj[v].push_back({u,wt});
+        vector<vector<pair<int, int>>> adj_lst(n);
+        for(auto ele: roads){
+            int u = ele[0];
+            int v = ele[1];
+            int wt = ele[2];
+            adj_lst[u].push_back({v, wt});
+            adj_lst[v].push_back({u, wt});
         }
         priority_queue<pair<long long,int>,
-        vector<pair<long long,int>>,
-        greater<pair<long long,int>>> pq;
-        vector<long long> dist(n,LLONG_MAX);
-        vector<long long> ways(n,0);
-        dist[0] = 0;
-        ways[0] = 1;
-        pq.push({0,0});
-        while(!pq.empty()) {
-            auto [currDist,node] = pq.top();
-            pq.pop();
-            if(currDist > dist[node]) continue;
-            for(auto [nextNode,weight] : adj[node]) {
-                long long newDist = currDist + weight;
-                if(newDist < dist[nextNode]) {
-                    dist[nextNode] = newDist;
-                    ways[nextNode] = ways[node];
-                    pq.push({newDist,nextNode});
+            vector<pair<long long,int>>,
+            greater<pair<long long,int>>> pq;
+        pq.push({0, 0});
+        vector<long long> distance(n,LLONG_MAX); distance[0] = 0;
+        vector<long long> ways(n,0); ways[0] = 1;
+        while(!pq.empty()){
+            auto ele = pq.top(); pq.pop();
+            long long dist = ele.first;
+            int node = ele.second;
+            if(dist > distance[node]) continue;
+            for(auto nei: adj_lst[node]){
+                int neigh = nei.first;
+                int wt = nei.second;
+                if(distance[neigh] > dist + wt){
+                    distance[neigh] = dist + wt;
+                    ways[neigh] = ways[node];
+                    pq.push({distance[neigh], neigh});
                 }
-                else if(newDist == dist[nextNode]) {
-                    ways[nextNode] = (ways[nextNode] + ways[node]) % MOD;
+                else if(distance[neigh] == dist + wt){
+                    ways[neigh] = (ways[neigh] + ways[node]) % MOD;
                 }
             }
         }
