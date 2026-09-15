@@ -4,8 +4,7 @@ public:
         int len = words[0].size();
         int req = words.size();
         unordered_map<string, int> mp;
-        for(string word : words)
-            mp[word]++;
+        for(string word : words) mp[word]++;
         vector<int> res;
         for(int offset = 0; offset < len; offset++) {
             int l = offset, cnt = 0;
