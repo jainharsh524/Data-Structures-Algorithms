@@ -1,53 +1,58 @@
-class DS{
-public:
-    vector<int> rank, parent;
-    DS(int n){
-        rank.resize(n,0);
-        parent.resize(n);
-        for(int i=0;i<n;i++) parent[i]=i;
-    }
-    int find_ult_par(int node){
-        if(node==parent[node]) return node;
-        return parent[node]=find_ult_par(parent[node]);
-    }
-    void unionByRank(int u,int v){
-        int pu=find_ult_par(u);
-        int pv=find_ult_par(v);
-        if(pu==pv) return;
-        if(rank[pu]>rank[pv]){
-            parent[pv]=pu;
+class DSU{
+    public:
+        vector<int> rank, parent;
+        DSU(int n){
+            rank.resize(n, 0);
+            parent.resize(n);
+            for(int i = 0; i< n;i++) parent[i] = i;
         }
-        else if(rank[pv]>rank[pu]){
-            parent[pu]=pv;
+        int find_ult_par(int u){
+            if(parent[u] != u){
+                parent[u] = find_ult_par(parent[u]);
+            }
+            return parent[u];
         }
-        else{
-            parent[pv]=pu;
-            rank[pu]++;
+        void unionByRank(int u, int v){
+            int ultu = find_ult_par(u);
+            int ultv = find_ult_par(v);
+            if(ultu == ultv) return;
+            if(rank[ultu] > rank[ultv]){
+                parent[ultv] = ultu;
+            }
+            else if(rank[ultu] < rank[ultv]){
+                parent[ultu] = ultv;
+            }
+            else{ 
+                parent[ultu] = ultv;
+                rank[ultv]++;
+            }
         }
-    }
 };
 class Solution {
 public:
     int removeStones(vector<vector<int>>& stones) {
-        int maxR = 0;
-        int maxC = 0;
+        int mR = INT_MIN;
+        int mC = INT_MIN;
         for(auto ele: stones){
-            maxR = max(maxR, ele[0]);
-            maxC = max(maxC, ele[1]);
+            mR = max(mR, ele[0]);
+            mC = max(mC, ele[1]);
         }
-        DS ds(maxR+maxC+2);
-        unordered_map<int, int> stoneNodes;
+        DSU ds(mR + mC + 2);
+        unordered_map<int, int> par;
         for(auto ele: stones){
             int r = ele[0];
-            int c = ele[1]+maxR+1;
+            int c = ele[1];
+            c += mR + 1;
             ds.unionByRank(r, c);
-            stoneNodes[r] = 1;
-            stoneNodes[c] = 1;
+            par[r] = 1;
+            par[c] = 1;
         }
         int cnt = 0;
-        for(auto ele: stoneNodes){
-            if(ds.find_ult_par(ele.first)==ele.first) cnt++;
+        for(int i = 0; i < (mR + mC + 2); i++){
+            if(par.find(i) != par.end()){
+                if(ds.parent[i] == i) cnt++;
+            }
         }
-        return stones.size()-cnt;
+        return stones.size() - cnt;
     }
 };
